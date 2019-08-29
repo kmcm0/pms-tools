@@ -7,14 +7,16 @@ if [ $(id -u) != 0 ]; then
         exit 1
 fi
 
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
 # User settings
 #BUILD="<BUILD>"                    # linux-x86_64 for 64 bit, linux-x86 for 32 bit. linux-aarch64 for ARMv8, linux-armv7hf_neon for ARMv7
 #DISTRO="<DISTRO>"                  # debian for .deb distros, redhat for rpm distros
 #PLEX_TOKEN="<TOKEN>"               # Insert Plex pass token here, otherwise not set
 
 # (optional) source rc file for settings
-if [ -f pms-update.rc ]; then
-	. pms-update.rc
+if [ -f ${SCRIPTPATH}/pms-update.rc ]; then
+	. ${SCRIPTPATH}/pms-update.rc
 fi
 
 if [[ ${DISTRO} == "debian" ]]; then
