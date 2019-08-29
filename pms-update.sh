@@ -10,7 +10,7 @@ fi
 # User settings
 #BUILD="<BUILD>"                    # linux-x86_64 for 64 bit, linux-x86 for 32 bit. linux-aarch64 for ARMv8, linux-armv7hf_neon for ARMv7
 #DISTRO="<DISTRO>"                  # debian for .deb distros, redhat for rpm distros
-#PLEX_TOKEN="<TOKEN>"               # Insert Plex pass token here, or use "none"
+#PLEX_TOKEN="<TOKEN>"               # Insert Plex pass token here, otherwise not set
 
 # (optional) source rc file for settings
 if [ -f pms-update.rc ]; then
@@ -25,7 +25,7 @@ else
 	echo "$0 not configured. exiting."; exit 1
 fi
 
-if [[ ${PLEX_TOKEN} != "none" ]]; then
+if ! [[ -z ${PLEX_TOKEN} ]]; then
 	LATEST_VER=$(curl -s -X GET "https://plex.tv/api/downloads/5.json?channel=plexpass&X-Plex-Token=${PLEX_TOKEN}" | python -c 'import sys, json; print json.load(sys.stdin)["computer"]["Linux"]["version"]')
 	DOWNLOAD_URL="https://plex.tv/downloads/latest/5?channel=8&build=${BUILD}&distro=${DISTRO}&X-Plex-Token=${PLEX_TOKEN}"
 else
@@ -50,3 +50,5 @@ else
 	echo "Not Updated, You have the current version."
 fi
 
+# Start PMS
+systemctl start plexmediaserver
