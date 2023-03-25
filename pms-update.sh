@@ -28,10 +28,10 @@ else
 fi
 
 if ! [[ -z ${PLEX_TOKEN} ]]; then
-	LATEST_VER=$(curl -s -X GET "https://plex.tv/api/downloads/5.json?channel=plexpass&X-Plex-Token=${PLEX_TOKEN}" | python -c 'import sys, json; print json.load(sys.stdin)["computer"]["Linux"]["version"]')
+	LATEST_VER=$(curl -s -X GET "https://plex.tv/api/downloads/5.json?channel=plexpass&X-Plex-Token=${PLEX_TOKEN}" | python3 -c 'import sys, json; result = json.load(sys.stdin)["computer"]["Linux"]["version"]; print(result)')
 	DOWNLOAD_URL="https://plex.tv/downloads/latest/5?channel=8&build=${BUILD}&distro=${DISTRO}&X-Plex-Token=${PLEX_TOKEN}"
 else
-	LATEST_VER=$(curl -s -X GET "https://plex.tv/api/downloads/5.json" | python -c 'import sys, json; print json.load(sys.stdin)["computer"]["Linux"]["version"]')
+	LATEST_VER=$(curl -s -X GET "https://plex.tv/api/downloads/5.json" | python3 -c 'import sys, json; result = json.load(sys.stdin)["computer"]["Linux"]["version"]; print(result)')
 	DOWNLOAD_URL="https://plex.tv/downloads/latest/5?build=${BUILD}&distro=${DISTRO}"
 fi
 
