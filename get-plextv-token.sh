@@ -19,6 +19,6 @@ curl -s -X POST "https://plex.tv/users/sign_in.json" \
      -H "X-Plex-Client-Identifier: ${XPLEXCLIENTID}" \
      -H "Content-Type: ${CONTENTTYPE}" \
      -d "user[login]=${USERNAME}" \
-     -d "user[password]=${PASSWORD}" | python3 -c 'import sys, json; print(json.load(sys.stdin))["user"]["authentication_token"]')
+     -d "user[password]=${PASSWORD}" | python3 -c 'import sys, json; result = json.load(sys.stdin)["user"]["authentication_token"]; print(result)')
 
 echo -e "------\nToken: ${PLEX_TOKEN}\n------\n"
